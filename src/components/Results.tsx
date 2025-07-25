@@ -49,27 +49,18 @@ export const Results = (props: ResultsProps) => {
                     <div key={`wrong-${index}`} className="question-result wrong-result">
                       <h4 className="result-question">{result.question.question}</h4>
                       <div className="result-options">
-                        {result.question.options.map((option, optionIndex) => (
-                          <div
-                            key={optionIndex}
-                            className={`result-option ${
-                              optionIndex === result.question.correctAnswer
-                                ? "correct-option"
-                                : optionIndex === result.userAnswer
-                                  ? "wrong-option"
-                                  : ""
-                            }`}
-                          >
-                            <span className="option-letter">{String.fromCharCode(65 + optionIndex)}</span>
-                            <span className="option-text">{option}</span>
-                            {optionIndex === result.question.correctAnswer && (
-                              <span className="option-indicator">✓ Correct</span>
-                            )}
-                            {optionIndex === result.userAnswer && optionIndex !== result.question.correctAnswer && (
-                              <span className="option-indicator">✗ Your Answer</span>
-                            )}
-                          </div>
-                        ))}
+                        {/* Show user's wrong answer */}
+                        <div className="result-option wrong-option">
+                          <span className="option-letter">{String.fromCharCode(65 + result.userAnswer)}</span>
+                          <span className="option-text">{result.question.options[result.userAnswer]}</span>
+                          <span className="option-indicator">✗ Your Answer</span>
+                        </div>
+                        {/* Show correct answer */}
+                        <div className="result-option correct-option">
+                          <span className="option-letter">{String.fromCharCode(65 + result.question.correctAnswer)}</span>
+                          <span className="option-text">{result.question.options[result.question.correctAnswer]}</span>
+                          <span className="option-indicator">✓ Correct</span>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -95,20 +86,12 @@ export const Results = (props: ResultsProps) => {
                     <div key={`right-${index}`} className="question-result right-result">
                       <h4 className="result-question">{result.question.question}</h4>
                       <div className="result-options">
-                        {result.question.options.map((option, optionIndex) => (
-                          <div
-                            key={optionIndex}
-                            className={`result-option ${
-                              optionIndex === result.question.correctAnswer ? "correct-option" : ""
-                            }`}
-                          >
-                            <span className="option-letter">{String.fromCharCode(65 + optionIndex)}</span>
-                            <span className="option-text">{option}</span>
-                            {optionIndex === result.question.correctAnswer && (
-                              <span className="option-indicator">✓ Your Answer</span>
-                            )}
-                          </div>
-                        ))}
+                        {/* Show user's correct answer */}
+                        <div className="result-option correct-option">
+                          <span className="option-letter">{String.fromCharCode(65 + result.userAnswer)}</span>
+                          <span className="option-text">{result.question.options[result.userAnswer]}</span>
+                          <span className="option-indicator">✓ Your Answer</span>
+                        </div>
                       </div>
                     </div>
                   ))}
