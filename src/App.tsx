@@ -1,8 +1,8 @@
-import TriviaApp from './page'
+import KingsQuiz from "./KingsQuiz"
 
 function App() {
   return (
-    <TriviaApp />
+    <KingsQuiz />
   )
 }
 

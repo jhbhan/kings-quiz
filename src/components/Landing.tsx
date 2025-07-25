@@ -18,8 +18,6 @@ export function LandingPage(props: GameSettings) {
         startGame,
     } = props;
     
-    const availableQuestions = allTriviaQuestions.filter((q) => selectedCategories.includes(q.category)).length
-
     return (
       <div className="trivia-container">
         <div className="landing-screen">
@@ -35,7 +33,6 @@ export function LandingPage(props: GameSettings) {
                   min={5}
                   max={20}
                   step={1}
-                  disabled={availableQuestions === 0}
                 />
             </div>
 
@@ -44,7 +41,6 @@ export function LandingPage(props: GameSettings) {
               <div className="category-options">
                 {categoryNames.map((name, index) => {
                   const categoryId = index + 1
-                  const categoryQuestionCount = allTriviaQuestions.filter((q) => q.category === categoryId).length
                   return (
                     <button
                       key={categoryId}
@@ -55,7 +51,6 @@ export function LandingPage(props: GameSettings) {
                         <span className="category-name">{name}</span>
                         {selectedCategories.includes(categoryId) && <span className="checkmark">✓</span>}
                       </div>
-                      <span className="category-count">({categoryQuestionCount} questions)</span>
                     </button>
                   )
                 })}
@@ -65,11 +60,7 @@ export function LandingPage(props: GameSettings) {
             <div className="game-info">
               <div className="info-summary">
                 <p>
-                  <strong>{availableQuestions}</strong> questions available from{" "}
                   <strong>{selectedCategories.length}</strong> selected categories
-                </p>
-                <p>
-                  Playing with <strong>{Math.min(selectedQuestionCount, availableQuestions)}</strong> questions
                 </p>
               </div>
             </div>
@@ -78,7 +69,7 @@ export function LandingPage(props: GameSettings) {
           <button
             className="start-btn"
             onClick={startGame}
-            disabled={selectedCategories.length === 0 || availableQuestions === 0}
+            disabled={selectedCategories.length === 0}
           >
             Start Game
           </button>

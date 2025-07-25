@@ -109,14 +109,14 @@ body {
 }
 
 .answer-option.correct {
-  border-color: #666; /* Dark gray for correct */
-  background-color: #e0e0e0; /* Slightly darker gray for correct */
+  border-color: #4a7c59; /* Muted green border */
+  background-color: #e6f4ea; /* Muted green background */
   color: #333;
 }
 
 .answer-option.incorrect {
-  border-color: #666; /* Dark gray for incorrect */
-  background-color: #e0e0e0; /* Slightly darker gray for incorrect */
+  border-color: #b85c5c; /* Muted red border */
+  background-color: #fbeaea; /* Muted red background */
   color: #333;
 }
 
@@ -140,11 +140,11 @@ body {
 }
 
 .answer-option.correct .option-letter {
-  background-color: #333; /* Black for correct */
+  background-color: #4a7c59; /* Muted green */
 }
 
 .answer-option.incorrect .option-letter {
-  background-color: #333; /* Black for incorrect */
+  background-color: #b85c5c; /* Muted red */
 }
 
 .option-text {
@@ -505,31 +505,31 @@ body {
 }
 
 .correct-option {
-  background-color: #e0e0e0; /* Light gray for correct option */
-  border-color: #666;
+  background-color: #e6f4ea; /* Muted green for correct option */
+  border-color: #4a7c59;
   color: #333;
 }
 
 .correct-option .option-letter {
-  background-color: #333;
+  background-color: #4a7c59;
 }
 
 .correct-option .option-indicator {
-  color: #333;
+  color: #4a7c59;
 }
 
 .wrong-option {
-  background-color: #e0e0e0; /* Light gray for wrong option */
-  border-color: #666;
+  background-color: #fbeaea; /* Muted red for wrong option */
+  border-color: #b85c5c;
   color: #333;
 }
 
 .wrong-option .option-letter {
-  background-color: #333;
+  background-color: #b85c5c;
 }
 
 .wrong-option .option-indicator {
-  color: #333;
+  color: #b85c5c;
 }
 
 .no-questions {

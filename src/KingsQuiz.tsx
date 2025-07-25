@@ -4,7 +4,7 @@ import { type Question, type QuestionResult, allTriviaQuestions } from "./types"
 import { LandingPage } from "./components/Landing"
 import { Results } from "./components/Results"
 
-export default function TriviaApp() {
+export default function KingsQuiz() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
   const [score, setScore] = useState(0)
@@ -19,37 +19,31 @@ export default function TriviaApp() {
   const currentQuestion = gameQuestions[currentQuestionIndex]
 
   const handleAnswerSelect = (answerIndex: number) => {
-    setSelectedAnswer(answerIndex)
-  }
-
-  const handleSubmit = () => {
-    if (selectedAnswer === null) return
-
-    const isCorrect = selectedAnswer === currentQuestion.correctAnswer
+    if (showResult) return; // Prevent double click during result
+    setSelectedAnswer(answerIndex);
+    // Immediately submit
+    const isCorrect = answerIndex === currentQuestion.correctAnswer;
     if (isCorrect) {
-      setScore(score + 1)
+      setScore(score + 1);
     }
-
     // Store the result
     const result: QuestionResult = {
       question: currentQuestion,
-      userAnswer: selectedAnswer,
+      userAnswer: answerIndex,
       isCorrect: isCorrect,
-    }
-
-    setQuestionResults((prev) => [...prev, result])
-    setShowResult(true)
-
+    };
+    setQuestionResults((prev) => [...prev, result]);
+    setShowResult(true);
     setTimeout(() => {
       if (currentQuestionIndex < gameQuestions.length - 1) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1)
-        setSelectedAnswer(null)
-        setShowResult(false)
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+        setSelectedAnswer(null);
+        setShowResult(false);
       } else {
-        setGameFinished(true)
+        setGameFinished(true);
       }
-    }, 2000)
-  }
+    }, 1000);
+  };
 
   const handleCategoryToggle = (categoryId: number) => {
     setSelectedCategories((prev) => {
@@ -61,7 +55,7 @@ export default function TriviaApp() {
     })
   }
 
-  const startGame = () => {
+  const startGame = async () => {
     // Filter questions by selected categories
     const filteredQuestions = allTriviaQuestions.filter((q) => selectedCategories.includes(q.category))
 
@@ -123,7 +117,17 @@ export default function TriviaApp() {
       </div>
 
       <div className="question-section">
-        <h1 className="question">{currentQuestion.question}</h1>
+        {showResult ? (
+          <div className="result-message">
+            {selectedAnswer === currentQuestion.correctAnswer ? (
+              <span className="correct-message">✓ Correct!</span>
+            ) : (
+              <span className="incorrect-message">
+                ✗ Incorrect. The correct answer was {String.fromCharCode(65 + currentQuestion.correctAnswer)}.
+              </span>
+            )}
+          </div>
+        ) : <h1 className="question">{currentQuestion.question}</h1>}
       </div>
 
       <div className="answers-section">
@@ -146,24 +150,6 @@ export default function TriviaApp() {
             <span className="option-text">{option}</span>
           </button>
         ))}
-      </div>
-
-      <div className="submit-section">
-        {!showResult ? (
-          <button className="submit-btn" onClick={handleSubmit} disabled={selectedAnswer === null}>
-            Submit Answer
-          </button>
-        ) : (
-          <div className="result-message">
-            {selectedAnswer === currentQuestion.correctAnswer ? (
-              <span className="correct-message">✓ Correct!</span>
-            ) : (
-              <span className="incorrect-message">
-                ✗ Incorrect. The correct answer was {String.fromCharCode(65 + currentQuestion.correctAnswer)}.
-              </span>
-            )}
-          </div>
-        )}
       </div>
     </div>
   )
