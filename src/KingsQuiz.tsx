@@ -3,14 +3,17 @@ import "./trivia.css"
 import { type Question, type QuestionResult, allTriviaQuestions } from "./types"
 import { LandingPage } from "./components/Landing"
 import { Results } from "./components/Results"
+import { fetchQuestions } from "./api"
 
 export default function KingsQuiz() {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
-  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
-  const [score, setScore] = useState(0)
   const [showResult, setShowResult] = useState(false)
   const [gameFinished, setGameFinished] = useState(false)
   const [gameStarted, setGameStarted] = useState(false)
+  const [loadingQuestions, setLoadingQuestions] = useState(false)
+
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
+  const [score, setScore] = useState(0)
   const [selectedCategories, setSelectedCategories] = useState<number[]>([1, 2, 3, 4])
   const [selectedQuestionCount, setSelectedQuestionCount] = useState(10)
   const [gameQuestions, setGameQuestions] = useState<Question[]>([])
@@ -56,14 +59,11 @@ export default function KingsQuiz() {
   }
 
   const startGame = async () => {
-    // Filter questions by selected categories
-    const filteredQuestions = allTriviaQuestions.filter((q) => selectedCategories.includes(q.category))
-
-    // Shuffle and limit questions
-    const shuffled = [...filteredQuestions].sort(() => Math.random() - 0.5)
-    const limitedQuestions = shuffled.slice(0, Math.min(selectedQuestionCount, shuffled.length))
-
-    setGameQuestions(limitedQuestions)
+    setLoadingQuestions(true)
+    const fetchedQuestions = await fetchQuestions(selectedQuestionCount, selectedCategories);
+    const shuffled = [...fetchedQuestions].sort(() => Math.random() - 0.5)
+    setGameQuestions(shuffled)
+    setLoadingQuestions(false)
     setGameStarted(true)
   }
 
@@ -76,6 +76,10 @@ export default function KingsQuiz() {
     setGameStarted(false)
     setGameQuestions([])
     setQuestionResults([])
+  }
+
+  if (loadingQuestions) {
+    return <div className="loading">Loading questions...</div>
   }
 
   if (gameFinished) {
