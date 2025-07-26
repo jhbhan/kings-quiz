@@ -1,17 +1,32 @@
 {
-  "name": "kings-quiz",
-  "private": true,
+  "name": "@jhbhan/kings-quiz",
   "version": "0.0.0",
+  "description": "Old testament Kings trivia quiz game",
   "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "author": "Jason Bhan",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "bible",
+    "game",
+    "genealogy",
+    "trivia"
+  ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsup src/index.tsx --format cjs,esm --dts",
     "lint": "eslint .",
     "preview": "vite preview"
   },
-  "dependencies": {
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+  "peerDependencies": {
+    "react": ">=17",
+    "react-dom": ">=17"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",
@@ -22,6 +37,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.3.0",
+    "tsup": "^8.5.0",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.35.1",
     "vite": "^6.1.0"

@@ -51,14 +51,12 @@ export const Results = (props: ResultsProps) => {
                       <div className="result-options">
                         {/* Show user's wrong answer */}
                         <div className="result-option wrong-option">
-                          <span className="option-letter">{String.fromCharCode(65 + result.userAnswer)}</span>
-                          <span className="option-text">{result.question.options[result.userAnswer]}</span>
+                          <span className="option-text">{result.userAnswer}</span>
                           <span className="option-indicator">✗ Your Answer</span>
                         </div>
                         {/* Show correct answer */}
                         <div className="result-option correct-option">
-                          <span className="option-letter">{String.fromCharCode(65 + result.question.correctAnswer)}</span>
-                          <span className="option-text">{result.question.options[result.question.correctAnswer]}</span>
+                          <span className="option-text">{result.question.correctAnswer}</span>
                           <span className="option-indicator">✓ Correct</span>
                         </div>
                       </div>
@@ -88,8 +86,7 @@ export const Results = (props: ResultsProps) => {
                       <div className="result-options">
                         {/* Show user's correct answer */}
                         <div className="result-option correct-option">
-                          <span className="option-letter">{String.fromCharCode(65 + result.userAnswer)}</span>
-                          <span className="option-text">{result.question.options[result.userAnswer]}</span>
+                          <span className="option-text">{result.userAnswer}</span>
                           <span className="option-indicator">✓ Your Answer</span>
                         </div>
                       </div>

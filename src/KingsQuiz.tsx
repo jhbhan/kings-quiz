@@ -1,6 +1,6 @@
 import { useState } from "react"
 import "./trivia.css"
-import { type Question, type QuestionResult, allTriviaQuestions } from "./types"
+import { type Category, type Question, type QuestionResult } from "./types"
 import { LandingPage } from "./components/Landing"
 import { Results } from "./components/Results"
 import { fetchQuestions } from "./api"
@@ -12,27 +12,27 @@ export default function KingsQuiz() {
   const [loadingQuestions, setLoadingQuestions] = useState(false)
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
-  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
   const [score, setScore] = useState(0)
-  const [selectedCategories, setSelectedCategories] = useState<number[]>([1, 2, 3, 4])
+  const [selectedCategories, setSelectedCategories] = useState<Category[]>(["successor", "kingdom", "approval", "prophetKing"])
   const [selectedQuestionCount, setSelectedQuestionCount] = useState(10)
   const [gameQuestions, setGameQuestions] = useState<Question[]>([])
   const [questionResults, setQuestionResults] = useState<QuestionResult[]>([])
 
   const currentQuestion = gameQuestions[currentQuestionIndex]
 
-  const handleAnswerSelect = (answerIndex: number) => {
+  const handleAnswerSelect = (answer: string) => {
     if (showResult) return; // Prevent double click during result
-    setSelectedAnswer(answerIndex);
+    setSelectedAnswer(answer);
     // Immediately submit
-    const isCorrect = answerIndex === currentQuestion.correctAnswer;
+    const isCorrect = answer === currentQuestion.correctAnswer;
     if (isCorrect) {
       setScore(score + 1);
     }
     // Store the result
     const result: QuestionResult = {
       question: currentQuestion,
-      userAnswer: answerIndex,
+      userAnswer: answer,
       isCorrect: isCorrect,
     };
     setQuestionResults((prev) => [...prev, result]);
@@ -48,7 +48,7 @@ export default function KingsQuiz() {
     }, 1000);
   };
 
-  const handleCategoryToggle = (categoryId: number) => {
+  const handleCategoryToggle = (categoryId: Category) => {
     setSelectedCategories((prev) => {
       if (prev.includes(categoryId)) {
         return prev.filter((id) => id !== categoryId)
@@ -127,7 +127,7 @@ export default function KingsQuiz() {
               <span className="correct-message">✓ Correct!</span>
             ) : (
               <span className="incorrect-message">
-                ✗ Incorrect. The correct answer was {String.fromCharCode(65 + currentQuestion.correctAnswer)}.
+                ✗ Incorrect. The correct answer was {currentQuestion.correctAnswer}.
               </span>
             )}
           </div>
@@ -138,19 +138,18 @@ export default function KingsQuiz() {
         {currentQuestion.options.map((option, index) => (
           <button
             key={index}
-            className={`answer-option ${selectedAnswer === index ? "selected" : ""} ${
+            className={`answer-option ${selectedAnswer === option ? "selected" : ""} ${
               showResult
-                ? index === currentQuestion.correctAnswer
+                ? option === currentQuestion.correctAnswer
                   ? "correct"
-                  : selectedAnswer === index
+                  : selectedAnswer === option
                     ? "incorrect"
                     : ""
                 : ""
             }`}
-            onClick={() => handleAnswerSelect(index)}
+            onClick={() => handleAnswerSelect(option)}
             disabled={showResult}
           >
-            <span className="option-letter">{String.fromCharCode(65 + index)}</span>
             <span className="option-text">{option}</span>
           </button>
         ))}

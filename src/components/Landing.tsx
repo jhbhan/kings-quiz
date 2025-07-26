@@ -1,11 +1,11 @@
-import { allTriviaQuestions, categoryNames } from "../types";
+import { categoryNamesMap, type Category } from "../types";
 import { Slider } from "./shared/Slider";
 
 interface GameSettings {
     selectedQuestionCount: number;
     setSelectedQuestionCount: (count: number) => void;
-    selectedCategories: number[];
-    handleCategoryChange: (category: number) => void;
+    selectedCategories: Category[];
+    handleCategoryChange: (category: Category) => void;
     startGame: () => void;
 }
 
@@ -39,17 +39,16 @@ export function LandingPage(props: GameSettings) {
             <div className="setting-group">
               <h3>Select Categories</h3>
               <div className="category-options">
-                {categoryNames.map((name, index) => {
-                  const categoryId = index + 1
+                {Object.entries(categoryNamesMap).map(([key, name]) => {
                   return (
                     <button
-                      key={categoryId}
-                      className={`category-option ${selectedCategories.includes(categoryId) ? "selected" : ""}`}
-                      onClick={() => handleCategoryChange(categoryId)}
+                      key={key}
+                      className={`category-option ${selectedCategories.includes(key as Category) ? "selected" : ""}`}
+                      onClick={() => handleCategoryChange(key as Category)}
                     >
                       <div className="category-header">
                         <span className="category-name">{name}</span>
-                        {selectedCategories.includes(categoryId) && <span className="checkmark">✓</span>}
+                        {selectedCategories.includes(key as Category) && <span className="checkmark">✓</span>}
                       </div>
                     </button>
                   )
