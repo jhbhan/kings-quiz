@@ -1,6 +1,6 @@
 {
   "name": "@jhbhan/kings-quiz",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Old testament Kings trivia quiz game",
   "type": "module",
   "main": "dist/index.cjs",
