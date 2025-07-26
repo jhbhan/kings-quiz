@@ -1,5 +1,4 @@
 import { useState } from "react"
-import "./trivia.css"
 import { type Category, type Question, type QuestionResult } from "./types"
 import { LandingPage } from "./components/Landing"
 import { Results } from "./components/Results"
