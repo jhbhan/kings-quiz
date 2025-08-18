@@ -119,7 +119,7 @@ export default function KingsQuiz() {
         <div className="score">Score: {score}</div>
       </div>
 
-      <div className="question-section">
+      <div className="question-section question-section-set-height">
         {showResult ? (
           <div className="result-message">
             {selectedAnswer === currentQuestion.correctAnswer ? (

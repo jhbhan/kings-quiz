@@ -164,12 +164,15 @@ body::before {
   border: 2px solid var(--border-neon);
   border-radius: 12px;
   padding: 40px 30px;
-  height: 150px;
   margin-bottom: 30px;
   box-shadow: var(--shadow-neon), var(--shadow-card);
   text-align: center;
   position: relative;
   overflow: hidden;
+}
+
+.question-section-set-height {
+  height: 150px;
 }
 
 .question {
