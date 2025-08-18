@@ -4,7 +4,7 @@ import { LandingPage } from "./components/Landing"
 import { Results } from "./components/Results"
 import { fetchQuestions } from "./api"
 
-export default function KingsQuiz() {
+export function KingsQuiz() {
   const [showResult, setShowResult] = useState(false)
   const [gameFinished, setGameFinished] = useState(false)
   const [gameStarted, setGameStarted] = useState(false)
